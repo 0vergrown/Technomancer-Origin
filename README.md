@@ -5,6 +5,8 @@
 # Technomancer Origin - Origins (Fabric) For Minecraft 1.18
 So, I started working on this Origin about a month ago, it is part of a set of 5 Origins based around magic. This one being the first part of the set. I decided to go with a more technological themed magic as I think its an interesting concept that's honestly not been explored at all on Origins or even Minecraft as a whole. Yeah, we have Redstone but that is viewed as a mostly industrial element even though its used in potions thus proving it has some magical properties, the concept isn't really explored all that much so I wanted to take the time and develop an Origin that could potentially explore the concept of Technomancy in Minecraft and how much more we could expand on it if explored.
 
+***NOTE:*** You must use the texture to get the item textures. Otherwise they are just vanilla textures and regular items.
+
 Technomancer datapack is made for the fabric mod, [Origins](https://www.curseforge.com/minecraft/mc-mods/origins). You must have it for this pack to work.
 
 **This Pack Adds:**
