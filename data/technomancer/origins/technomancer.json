@@ -1,0 +1,20 @@
+{
+	"powers":[
+	   "technomancer:tech_mana",
+	   "technomancer:summon_items",
+	   "technomancer:laser_beam",
+	   "technomancer:healing_aura",
+	   "technomancer:nanite_wall",
+	   "technomancer:nanite_wall_toggle",
+	   "technomancer:blockade",
+	   "technomancer:grappling_hook",
+	   "technomancer:no_shield",
+	   "technomancer:vulnerable_to_water",
+	   "technomancer:technomancers_curse"
+	],
+	"icon":"minecraft:redstone",
+	"order":10,
+	"impact":3,
+	"name":"Technomancer",
+	"description":"You are a powerful Technomancer. Armed with the power and knowledge of the Godfathers of Technomancy, you are able to create spells using Conduits and your staff."
+}
