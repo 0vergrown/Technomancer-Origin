@@ -2,154 +2,91 @@
 	"name":"Nanite Shield",
 	"description":"§bLight Blue Conduit:§r Surround yourself in nanites, preventing all health loss, but are unable to move. §6Mana Cost: 500 Per Second Used. §f[Primary]",
 	"type":"origins:multiple",
-	"summon_nanites":{
-	   "type":"origins:active_self",
-	   "entity_action":{
-		  "type":"origins:execute_command",
-		  "command":"execute as @s run function technomancer:wall_summon",
-		  "permission_level":4
-	   },
-	   "cooldown":1,
-	   "condition":{
-		  "type":"origins:power_active",
-		  "power":"technomancer:nanite_wall_toggle",
-		  "inverted":false
-	   },
-	   "key":{
-		  "key":"key.origins.primary_active",
-		  "continuous":false
-	   },
+	"resource":{
+	   "type":"origins:resource",
+	   "min":0,
+	   "max":1,
 	   "hud_render":{
 		  "should_render":false
-	   }
+	   },
+	   "start_value":0
 	},
-	"immobile":{
-	   "type":"origins:stacking_status_effect",
-	   "min_stacks":2,
-	   "max_stacks":2,
-	   "duration_per_stack":10,
-	   "effects":[
-		  {
-			 "effect":"minecraft:jump_boost",
-			 "amplifier":199,
-			 "is_ambient":true,
-			 "show_particles":false,
-			 "show_icon":true
-		  },
-		  {
-			 "effect":"minecraft:slowness",
-			 "amplifier":199,
-			 "is_ambient":true,
-			 "show_particles":false,
-			 "show_icon":true
-		  },
-		  {
-			 "effect":"minecraft:resistance",
-			 "amplifier":199,
-			 "is_ambient":true,
-			 "show_particles":false,
-			 "show_icon":true
-		  }
-	   ],
-	   "condition":{
-		  "type":"origins:and",
-		  "conditions":[
-			 {
-				"type":"origins:equipped_item",
-				"equipment_slot":"mainhand",
-				"item_condition":{
-				   "type":"origins:ingredient",
-				   "ingredient":{
-					  "item":"minecraft:light_blue_dye"
-				   }
-				}
-			 },
-			 {
-				"type":"origins:command",
-				"command":"data get entity @s SelectedItem.tag.CustomModelData",
-				"comparison":"==",
-				"compare_to":1
-			 },
-			 {
-				"type":"origins:equipped_item",
-				"equipment_slot":"offhand",
-				"item_condition":{
-				   "type":"origins:ingredient",
-				   "ingredient":{
-					  "item":"minecraft:warped_fungus_on_a_stick"
-				   }
-				}
-			 },
-			 {
-				"type":"origins:command",
-				"command":"data get entity @s Inventory[{Slot: -106b}].tag.CustomModelData",
-				"comparison":"==",
-				"compare_to":1
-			 },
-			 {
-				"type":"origins:resource",
-				"resource":"technomancer:tech_mana_resource",
-				"comparison":">=",
-				"compare_to":9000
-			 },
-			 {
-				"type":"origins:power_active",
-				"power":"technomancer:nanite_wall_toggle",
-				"inverted":false
-			 }
-		  ]
-	   }
-	},
-	"wall":{
+	"resource_drain":{
 	   "type":"origins:action_over_time",
 	   "entity_action":{
 		  "type":"origins:and",
 		  "actions":[
 			 {
-				"type":"origins:execute_command",
-				"command":"execute as @s run function technomancer:wall",
-				"permission_level":4
+				"type":"origins:modify_resource",
+				"modifier":{
+				   "operation":"add_base_early",
+				   "value":-500.00
+				},
+				"resource":"technomancer:tech_mana_resource"
 			 },
 			 {
-				"type":"origins:change_resource",
-				"resource":"technomancer:tech_mana_resource",
-				"change":-500
+				"type":"origins:apply_effect",
+				"effects":[
+				   {
+					  "effect":"minecraft:jump_boost",
+					  "duration":100,
+					  "amplifier":199,
+					  "is_ambient":true,
+					  "show_particles":false,
+					  "show_icon":true
+				   },
+				   {
+					  "effect":"minecraft:slowness",
+					  "duration":100,
+					  "amplifier":199,
+					  "is_ambient":true,
+					  "show_particles":false,
+					  "show_icon":true
+				   },
+				   {
+					  "effect":"minecraft:resistance",
+					  "duration":100,
+					  "amplifier":199,
+					  "is_ambient":true,
+					  "show_particles":false,
+					  "show_icon":true
+				   }
+				]
 			 }
 		  ]
+	   },
+	   "falling_action":{
+		"type":"origins:and",
+		"actions":[
+		   {
+			"type":"origins:modify_resource",
+			"modifier":{
+			   "operation":"set_total",
+			   "value":0.00
+			},
+			"resource":"technomancer:nanite_wall_resource"
+		   },
+		   {
+			"type": "origins:clear_effect",
+			"effect": "minecraft:jump_boost"
+		   },
+		   {
+			"type": "origins:clear_effect",
+			"effect": "minecraft:slowness"
+		   },
+		   {
+			"type": "origins:clear_effect",
+			"effect": "minecraft:resistance"
+		   }
+		]
 	   },
 	   "interval":20,
 	   "condition":{
 		  "type":"origins:and",
 		  "conditions":[
 			 {
-				"type":"origins:equipped_item",
-				"equipment_slot":"mainhand",
-				"item_condition":{
-				   "type":"origins:ingredient",
-				   "ingredient":{
-					  "item":"minecraft:light_blue_dye"
-				   }
-				}
-			 },
-			 {
-				"type":"origins:command",
-				"command":"data get entity @s SelectedItem.tag.CustomModelData",
-				"comparison":"==",
-				"compare_to":1
-			 },
-			 {
-				"type":"origins:equipped_item",
-				"equipment_slot":"offhand",
-				"item_condition":{
-				   "type":"origins:ingredient",
-				   "ingredient":{
-					  "item":"minecraft:warped_fungus_on_a_stick"
-				   }
-				}
-			 },
-			 {
-				"type":"origins:command",
-				"command":"data get entity @s Inventory[{Slot: -106b}].tag.CustomModelData",
+				"type":"origins:resource",
+				"resource":"technomancer:nanite_wall_resource",
 				"comparison":"==",
 				"compare_to":1
 			 },
@@ -158,11 +95,91 @@
 				"resource":"technomancer:tech_mana_resource",
 				"comparison":">=",
 				"compare_to":9000
+			 }
+		  ]
+	   }
+	},
+	"toggle":{
+	   "type":"origins:active_self",
+	   "entity_action":{
+		  "type":"origins:if_else",
+		  "condition":{
+			 "type":"origins:resource",
+			 "resource":"technomancer:nanite_wall_resource",
+			 "comparison":"==",
+			 "compare_to":0
+		  },
+		  "if_action":{
+			 "type":"origins:modify_resource",
+			 "modifier":{
+				"operation":"set_total",
+				"value":1.00
+			 },
+			 "resource":"technomancer:nanite_wall_resource"
+		  },
+		  "else_action":{
+			 "type":"origins:modify_resource",
+			 "modifier":{
+				"operation":"set_total",
+				"value":0.00
+			 },
+			 "resource":"technomancer:nanite_wall_resource"
+		  }
+	   },
+	   "cooldown":1,
+	   "hud_render":{
+		  "should_render":false
+	   },
+	   "key":{
+		  "key":"key.origins.primary_active",
+		  "continuous":false
+	   },
+	   "condition":{
+		  "type":"origins:and",
+		  "conditions":[
+			 {
+				"type":"origins:equipped_item",
+				"equipment_slot":"mainhand",
+				"item_condition":{
+				   "type":"origins:and",
+				   "conditions":[
+					  {
+						 "type":"origins:ingredient",
+						 "ingredient":{
+							"item":"minecraft:light_blue_dye"
+						 }
+					  },
+					  {
+						 "type":"origins:nbt",
+						 "nbt":"{CustomModelData:1}"
+					  }
+				   ]
+				}
 			 },
 			 {
-				"type":"origins:power_active",
-				"power":"technomancer:nanite_wall_toggle",
-				"inverted":false
+				"type":"origins:equipped_item",
+				"equipment_slot":"offhand",
+				"item_condition":{
+				   "type":"origins:and",
+				   "conditions":[
+					  {
+						 "type":"origins:ingredient",
+						 "ingredient":{
+							"item":"minecraft:warped_fungus_on_a_stick"
+						 }
+					  },
+					  {
+						 "type":"origins:nbt",
+						 "nbt":"{CustomModelData:1}"
+					  }
+				   ]
+				}
+			 },
+			 {
+				"type":"origins:resource",
+				"resource":"technomancer:tech_mana_resource",
+				"comparison":">=",
+				"compare_to":9000
 			 },
 			 {
 				"type":"origins:fluid_height",
@@ -175,6 +192,164 @@
 				"inverted":true
 			 }
 		  ]
+	   }
+	},
+	"head_particles":{
+	   "type":"origins:particle",
+	   "particle":"minecraft:enchant",
+	   "count":6,
+	   "speed":0.00,
+	   "force":false,
+	   "spread":{
+		  "x":0.135,
+		  "y":0.080,
+		  "z":0.135
+	   },
+	   "offset_x":0.00,
+	   "offset_y":0.80,
+	   "offset_z":0.00,
+	   "frequency":1,
+	   "visible_in_first_person":false,
+	   "visible_while_invisible":true,
+	   "condition":{
+		  "type":"origins:and",
+		  "conditions":[
+			 {
+				"type":"origins:resource",
+				"resource":"technomancer:nanite_wall_resource",
+				"comparison":"==",
+				"compare_to":1
+			 },
+			 {
+				"type":"origins:resource",
+				"resource":"technomancer:tech_mana_resource",
+				"comparison":">=",
+				"compare_to":9000
+			 }
+		  ]
+	   }
+	},
+	"spine_particles":{
+	   "type":"origins:particle",
+	   "particle":"minecraft:enchant",
+	   "count":6,
+	   "speed":0.00,
+	   "force":false,
+	   "spread":{
+		  "x":0.05,
+		  "y":0.40,
+		  "z":0.05
+	   },
+	   "offset_x":0.00,
+	   "offset_y":0.00,
+	   "offset_z":0.00,
+	   "frequency":1,
+	   "visible_in_first_person":false,
+	   "visible_while_invisible":true,
+	   "condition":{
+		  "type":"origins:and",
+		  "conditions":[
+			 {
+				"type":"origins:resource",
+				"resource":"technomancer:nanite_wall_resource",
+				"comparison":"==",
+				"compare_to":1
+			 },
+			 {
+				"type":"origins:resource",
+				"resource":"technomancer:tech_mana_resource",
+				"comparison":">=",
+				"compare_to":9000
+			 }
+		  ]
+	   }
+	},
+	"chest_particles":{
+	   "type":"origins:particle",
+	   "particle":"minecraft:enchant",
+	   "count":10,
+	   "speed":0.00,
+	   "force":false,
+	   "spread":{
+		  "x":0.25,
+		  "y":0.50,
+		  "z":0.25
+	   },
+	   "offset_x":0.00,
+	   "offset_y":0.20,
+	   "offset_z":0.00,
+	   "frequency":1,
+	   "visible_in_first_person":false,
+	   "visible_while_invisible":true,
+	   "condition":{
+		  "type":"origins:and",
+		  "conditions":[
+			 {
+				"type":"origins:resource",
+				"resource":"technomancer:nanite_wall_resource",
+				"comparison":"==",
+				"compare_to":1
+			 },
+			 {
+				"type":"origins:resource",
+				"resource":"technomancer:tech_mana_resource",
+				"comparison":">=",
+				"compare_to":9000
+			 }
+		  ]
+	   }
+	},
+	"feet_particles":{
+	   "type":"origins:particle",
+	   "particle":"minecraft:effect",
+	   "count":10,
+	   "speed":0.01,
+	   "force":false,
+	   "spread":{
+		  "x":0.20,
+		  "y":0.20,
+		  "z":0.20
+	   },
+	   "offset_x":0.00,
+	   "offset_y":0.00,
+	   "offset_z":0.00,
+	   "frequency":1,
+	   "visible_in_first_person":false,
+	   "visible_while_invisible":true,
+	   "condition":{
+		  "type":"origins:and",
+		  "conditions":[
+			 {
+				"type":"origins:resource",
+				"resource":"technomancer:nanite_wall_resource",
+				"comparison":"==",
+				"compare_to":1
+			 },
+			 {
+				"type":"origins:resource",
+				"resource":"technomancer:tech_mana_resource",
+				"comparison":">=",
+				"compare_to":9000
+			 }
+		  ]
+	   }
+	},
+	"reset_on_death":{
+	   "type":"origins:action_on_callback",
+	   "entity_action_respawned":{
+		  "type":"origins:modify_resource",
+		  "modifier":{
+			 "operation":"set_total",
+			 "value":0.00
+		  },
+		  "resource":"technomancer:nanite_wall_resource"
+	   },
+	   "execute_chosen_when_orb":false,
+	   "condition":{
+		  "type":"origins:resource",
+		  "resource":"technomancer:nanite_wall_resource",
+		  "comparison":"==",
+		  "compare_to":1
 	   }
 	}
 }

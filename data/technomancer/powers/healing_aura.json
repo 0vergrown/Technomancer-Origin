@@ -6,68 +6,98 @@
 	   "type":"origins:and",
 	   "actions":[
 		  {
-			 "type":"origins:execute_command",
-			 "command":"execute at @s run summon area_effect_cloud ~ ~ ~ {ReapplicationDelay:20,Radius:5f,RadiusPerTick:0f,RadiusOnUse:0f,Duration:100,Color:2539263,Effects:[{Id:10,Amplifier:3,Duration:20,ShowParticles:0b},{Id:22,Amplifier:4,Duration:600,ShowParticles:0b},{Id:23,Amplifier:4,Duration:400,ShowParticles:0b}]}",
-			 "permission_level":4
+			"type": "origins:spawn_effect_cloud",
+			"radius": 5.00,
+			"radius_on_use": -0.5,
+			"wait_time": 10,
+			"effects": [
+				{
+					"effect": "minecraft:regeneration",
+					"amplifier": 3,
+					"duration": 20,
+					"is_ambient": false,
+					"show_icon": true,
+					"show_particles": true
+				},
+				{
+					"effect": "minecraft:saturation",
+					"amplifier": 4,
+					"duration": 400,
+					"is_ambient": false,
+					"show_icon": true,
+					"show_particles": true
+				}
+			]
 		  },
 		  {
-			 "type":"origins:execute_command",
-			 "command":"playsound minecraft:block.respawn_anchor.charge master @s ~ ~ ~ 100 0.3",
-			 "permission_level":4
+			"type": "origins:play_sound",
+			"sound": "minecraft:block.respawn_anchor.charge",
+			"volume": 1.00,
+			"pitch": 1.00
 		  },
 		  {
-			 "type":"origins:execute_command",
-			 "command":"playsound minecraft:ambient.crimson_forest.mood master @s ~ ~ ~ 100 0.6",
-			 "permission_level":4
+			"type": "origins:play_sound",
+			"sound": "minecraft:ambient.crimson_forest.mood",
+			"volume": 1.00,
+			"pitch": 1.00
 		  },
 		  {
 			 "type":"origins:change_resource",
 			 "resource":"technomancer:tech_mana_resource",
-			 "change":-9000
+			 "change":-9000,
+			 "operation": "add"
 		  }
 	   ]
 	},
 	"cooldown":1,
 	"hud_render":{
-	   "should_render":false,
-	   "sprite_location":"origins:textures/gui/community/spiderkolo/resource_bar_02.png",
-	   "bar_index":9
+	   "should_render":false
+	},
+	"key":{
+		"key":"key.origins.primary_active",
+		"continuous":false
 	},
 	"condition":{
 	   "type":"origins:and",
 	   "conditions":[
-		  {
-			 "type":"origins:equipped_item",
-			 "equipment_slot":"mainhand",
-			 "item_condition":{
-				"type":"origins:ingredient",
-				"ingredient":{
-				   "item":"minecraft:blue_dye"
-				}
-			 }
-		  },
-		  {
-			 "type":"origins:command",
-			 "command":"data get entity @s SelectedItem.tag.CustomModelData",
-			 "comparison":"==",
-			 "compare_to":1
-		  },
-		  {
-			 "type":"origins:equipped_item",
-			 "equipment_slot":"offhand",
-			 "item_condition":{
-				"type":"origins:ingredient",
-				"ingredient":{
-				   "item":"minecraft:warped_fungus_on_a_stick"
-				}
-			 }
-		  },
-		  {
-			 "type":"origins:command",
-			 "command":"data get entity @s Inventory[{Slot: -106b}].tag.CustomModelData",
-			 "comparison":"==",
-			 "compare_to":1
-		  },
+		{
+			"type":"origins:equipped_item",
+			"equipment_slot":"mainhand",
+			"item_condition":{
+			   "type": "origins:and",
+			   "conditions": [
+				   {
+					   "type":"origins:ingredient",
+					   "ingredient":{
+						  "item":"minecraft:blue_dye"
+					   }
+				   },
+				   {      
+					   "type": "origins:nbt",
+					   "nbt": "{CustomModelData:1}"
+				   }
+			   ]
+			}
+		 },
+		 {
+			"type":"origins:equipped_item",
+			"equipment_slot":"offhand",
+			"item_condition":{
+			   "type": "origins:and",
+			   "conditions": [
+				   {
+					   "type":"origins:ingredient",
+					   "ingredient":{
+						  "item":"minecraft:warped_fungus_on_a_stick"
+					   }
+				   },
+				   {      
+					   "type": "origins:nbt",
+					   "nbt": "{CustomModelData:1}"
+				   }
+			   ]
+			}
+		 },
 		  {
 			 "type":"origins:resource",
 			 "resource":"technomancer:tech_mana_resource",
@@ -85,9 +115,5 @@
 			 "inverted":true
 		  }
 	   ]
-	},
-	"key":{
-	   "key":"key.origins.primary_active",
-	   "continuous":false
 	}
 }

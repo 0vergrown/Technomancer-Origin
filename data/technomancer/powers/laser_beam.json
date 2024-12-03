@@ -18,14 +18,14 @@
          {
             "type":"origins:change_resource",
             "resource":"technomancer:tech_mana_resource",
-            "change":-100
+            "change":-100,
+            "operation": "add"
          }
       ]
    },
    "cooldown":1,
    "hud_render":{
-      "should_render":false,
-      "bar_index":5
+      "should_render":false
    },
    "condition":{
       "type":"origins:and",
@@ -34,33 +34,39 @@
             "type":"origins:equipped_item",
             "equipment_slot":"mainhand",
             "item_condition":{
-               "type":"origins:ingredient",
-               "ingredient":{
-                  "item":"minecraft:red_dye"
-               }
+              "type": "origins:and",
+              "conditions": [
+                 {
+                    "type":"origins:ingredient",
+                    "ingredient":{
+                       "item":"minecraft:red_dye"
+                    }
+                 },
+                 {      
+                    "type": "origins:nbt",
+                    "nbt": "{CustomModelData:1}"
+                 }
+              ]
             }
-         },
-         {
-            "type":"origins:command",
-            "command":"data get entity @s SelectedItem.tag.CustomModelData",
-            "comparison":"==",
-            "compare_to":1
-         },
-         {
+          },
+          {
             "type":"origins:equipped_item",
             "equipment_slot":"offhand",
             "item_condition":{
-               "type":"origins:ingredient",
-               "ingredient":{
-                  "item":"minecraft:warped_fungus_on_a_stick"
-               }
+              "type": "origins:and",
+              "conditions": [
+                 {
+                    "type":"origins:ingredient",
+                    "ingredient":{
+                       "item":"minecraft:warped_fungus_on_a_stick"
+                    }
+                 },
+                 {      
+                    "type": "origins:nbt",
+                    "nbt": "{CustomModelData:1}"
+                 }
+              ]
             }
-         },
-         {
-            "type":"origins:command",
-            "command":"data get entity @s Inventory[{Slot: -106b}].tag.CustomModelData",
-            "comparison":"==",
-            "compare_to":1
          },
          {
             "type":"origins:resource",

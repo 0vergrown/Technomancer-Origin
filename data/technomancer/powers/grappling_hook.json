@@ -9,39 +9,49 @@
          "actions":[
             {
                "type":"origins:delay",
-               "ticks":3,
                "action":{
                   "type":"origins:add_velocity",
+                  "x": 0.00,
                   "y":0.25,
-                  "set":true
-               }
+                  "z": 0.00,
+                  "set":false,
+                  "space": "local"
+               },
+               "ticks":3
             },
             {
                "type":"origins:delay",
-               "ticks":4,
                "action":{
                   "type":"origins:add_velocity",
-                  "z":2,
+                  "x": 0.00,
+                  "y": 0.00,
+                  "z":2.00,
                   "space":"local",
-                  "set":true
-               }
+                  "set":false
+               },
+               "ticks":4
             },
             {
                "type":"origins:change_resource",
                "resource":"technomancer:tech_mana_resource",
-               "change":-500
+               "change":-500,
+               "operation": "add"
             },
             {
                "type":"origins:play_sound",
                "sound":"minecraft:entity.fishing_bobber.throw",
                "volume":0.25,
-               "pitch":0.5
+               "pitch":0.50
             }
          ]
       },
       "cooldown":1,
       "hud_render":{
          "should_render":false
+      },
+      "key":{
+         "key":"key.use",
+         "continuous":false
       },
       "condition":{
          "type":"origins:and",
@@ -95,10 +105,6 @@
                "inverted":true
             }
          ]
-      },
-      "key":{
-         "key":"key.use",
-         "continuous":false
       }
    },
    "effects":{
@@ -112,7 +118,8 @@
          "should_render":false
       },
       "key":{
-         "key":"key.use"
+         "key":"key.use",
+         "continuous": false
       },
       "condition":{
          "type":"origins:and",
@@ -121,34 +128,40 @@
                "type":"origins:equipped_item",
                "equipment_slot":"mainhand",
                "item_condition":{
-                  "type":"origins:ingredient",
-                  "ingredient":{
-                     "item":"minecraft:black_dye"
-                  }
+                 "type": "origins:and",
+                 "conditions": [
+                    {
+                       "type":"origins:ingredient",
+                       "ingredient":{
+                          "item":"minecraft:black_dye"
+                       }
+                    },
+                    {      
+                       "type": "origins:nbt",
+                       "nbt": "{CustomModelData:1}"
+                    }
+                 ]
                }
-            },
-            {
-               "type":"origins:command",
-               "command":"data get entity @s SelectedItem.tag.CustomModelData",
-               "comparison":"==",
-               "compare_to":1
-            },
-            {
+             },
+             {
                "type":"origins:equipped_item",
                "equipment_slot":"offhand",
                "item_condition":{
-                  "type":"origins:ingredient",
-                  "ingredient":{
-                     "item":"minecraft:warped_fungus_on_a_stick"
-                  }
+                 "type": "origins:and",
+                 "conditions": [
+                    {
+                       "type":"origins:ingredient",
+                       "ingredient":{
+                          "item":"minecraft:warped_fungus_on_a_stick"
+                       }
+                    },
+                    {      
+                       "type": "origins:nbt",
+                       "nbt": "{CustomModelData:1}"
+                    }
+                 ]
                }
-            },
-            {
-               "type":"origins:command",
-               "command":"data get entity @s Inventory[{Slot: -106b}].tag.CustomModelData",
-               "comparison":"==",
-               "compare_to":1
-            },
+             },
             {
                "type":"origins:resource",
                "resource":"technomancer:tech_mana_resource",

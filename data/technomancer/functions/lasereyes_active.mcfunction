@@ -1,5 +1,6 @@
 execute as @s run summon falling_block ~ ~1 ~ {NoGravity:1b,BlockState:{Name:"minecraft:barrier"}}
 fill ~ ~ ~ ~ ~ ~ air replace cave_air
+kill @e[type=minecraft:falling_block]
 execute as @e[type=!item,type=!player,distance=..0.8,nbt={Invulnerable:0b}] at @s anchored eyes run particle firework ~ ~ ~ 0 0 0 0.3 2 normal @a
 execute as @e[type=!item,type=!player,distance=..0.8,nbt={Invulnerable:0b}] store result score @s entity_health run data get entity @s Health
 execute as @e[type=!item,type=!player,distance=..0.8,nbt={Invulnerable:0b}] store result entity @s Health float 1 run scoreboard players remove @s entity_health 1
